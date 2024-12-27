@@ -1,0 +1,31 @@
+// Bloc buildscript (doit être au début)
+buildscript {
+    repositories {
+        google()  // Repository Google
+        mavenCentral()  // Repository Maven
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.0.4'  // Assurez-vous que cette version de Gradle est compatible
+        classpath 'com.google.gms:google-services:4.3.15'  // Dépendance Google Services
+    }
+}
+
+// Bloc allprojects
+allprojects {
+    repositories {
+        google()  // Repository Google
+        mavenCentral()  // Repository Maven
+    }
+}
+
+rootProject.buildDir = "../build"
+
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+    project.evaluationDependsOn(":app")
+}
+
+// Tâche de nettoyage
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
